@@ -5,7 +5,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
- 
+import java.util.concurrent.ExecutionException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -24,10 +25,18 @@ public class AppUserDAO {
     private static final Map<Long, AppUser> USERS_MAP = new HashMap<Long, AppUser>();
  
     static {
-        initDATA();
+        try {
+			initDATA();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
  
-    private static void initDATA() {
+    private static void initDATA() throws InterruptedException, ExecutionException {
         String encrytedPassword = "";
  
         AppUser tom = new AppUser(1L, "tom", "Tom", "Tom", //
@@ -79,7 +88,7 @@ public class AppUserDAO {
         return list;
     }
  
-    public AppUser createAppUser(AppUserForm form) {
+    public AppUser createAppUser(AppUserForm form) throws InterruptedException, ExecutionException {
         Long userId = this.getMaxUserId() + 1;
         String encrytedPassword = this.passwordEncoder.encode(form.getPassword());
  

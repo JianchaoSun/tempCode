@@ -75,7 +75,7 @@ public class MainController {
    @RequestMapping("/registerSuccessfulPage")
    public String viewRegisterSuccessful(Model model) {
  
-      return "registerSuccessfulPage";
+      return "/registerSuccessfulPage";
    }
  
  
@@ -89,7 +89,7 @@ public class MainController {
       model.addAttribute("appUserForm", form);
       model.addAttribute("countries", countries);
  
-      return "registerPage";
+      return "/register";//registerPage
    }
  
    // This method is called to save the registration information.

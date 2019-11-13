@@ -45,6 +45,32 @@ public class foodRecipe implements Comparable<foodRecipe> {
 		}
 		
 	}
+	
+	
+	
+	
+	public void ComparebyFood(List<Food> in) {
+		if(meatIngredient!=null) {
+		for(int i=0;i<meatIngredient.size();i++) {
+			if(in.contains(meatIngredient.get(i))) {
+				priority++;
+			}
+		}
+		}
+		if(conIngredient!=null){
+		for(int i=0;i<conIngredient.size();i++) {
+			if(in.contains(conIngredient.get(i))) {
+				priority++;
+			}
+		}
+		}
+		
+	}
+	
+	
+	
+	
+	
 
 	public String getDescription() {
 		return Description;

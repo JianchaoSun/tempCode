@@ -1,5 +1,21 @@
 package data;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import org.springframework.context.annotation.Role;
+import org.springframework.security.core.GrantedAuthority;
+
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
+import com.google.firebase.cloud.FirestoreClient;
+
+import supply.Search;
+
 public class AppUser {
 private Long userId;
 private String userName;
@@ -9,6 +25,11 @@ private boolean enabled;
 private String gender;
 private String email;
 private String encrytedPassword;
+
+
+private List<Food> foodList;
+
+private List<foodRecipe> recipeList;
  
 private String countryCode;
 
@@ -17,7 +38,7 @@ public AppUser() {}
 
 public AppUser(Long userId, String userName, String firstName, String lastName, //
         boolean enabled, String gender, //
-        String email,String countryCode, String encrytedPassword) {
+        String email,String countryCode, String encrytedPassword) throws InterruptedException, ExecutionException {
     super();
     this.userId = userId;
     this.userName = userName;
@@ -27,7 +48,9 @@ public AppUser(Long userId, String userName, String firstName, String lastName, 
     this.gender = gender;
     this.email = email;
     this.countryCode= countryCode;
-    this.encrytedPassword = encrytedPassword;
+    this.encrytedPassword = encrytedPassword;    	
+    if(foodList!=null) {
+    updateRecipe();}
 }
 
 public Long getUserId() {
@@ -100,6 +123,42 @@ public String getCountryCode() {
 
 public void setCountryCode(String countryCode) {
     this.countryCode = countryCode;
+}
+
+
+
+public List<Food> getFoodList() {
+	return foodList;
+}
+
+
+public void setFoodList(List<Food> foodList) {
+	this.foodList = foodList;
+}
+
+public void updateFood(Food food) throws InterruptedException, ExecutionException {
+	foodList.add(food);
+	updateRecipe();
+}
+
+private void updateRecipe() throws InterruptedException, ExecutionException {
+	Search s = new Search();
+	setRecipeList(s.performSearch(getFoodList()));	
+}
+
+
+public List<foodRecipe> getRecipeList() {
+	return recipeList;
+}
+
+
+public void setRecipeList(List<foodRecipe> recipeList) {
+	this.recipeList = recipeList;
+}
+
+public String[] getRoles(){
+	String[]l =new String[2];
+	return l;
 }
 
 }

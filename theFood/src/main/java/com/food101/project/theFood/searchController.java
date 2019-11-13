@@ -28,6 +28,7 @@ import com.google.firebase.cloud.FirestoreClient;
 
 import data.Food;
 import data.foodRecipe;
+import supply.Search;
 
 @Controller
 public class searchController {
@@ -38,7 +39,9 @@ public class searchController {
         Model model
     ) throws InterruptedException, ExecutionException {
 		
-		List<foodRecipe> list = performSearch(searchInput);
+		
+		Search search = new Search();
+		List<foodRecipe> list = search.performSearch(searchInput);
 	
 		
 		String[] name = new String[list.size()];
@@ -53,6 +56,8 @@ public class searchController {
 		return "home";
     }
 	
+	
+	/*
 	private List<foodRecipe> performSearch(String s) throws InterruptedException, ExecutionException {
 		
 		//List<foodRecipe> l = new ArrayList<foodRecipe>();
@@ -78,7 +83,7 @@ ApiFuture<QuerySnapshot> future = db1.collection("foodRecipe").get();
 		if(list.size()==0) {
 			list.add(new foodRecipe(9)); //("fuck you");
 		}
-		*/
+	*	/
 		
 		for(int i=0;i< list.size();i++) {
 			list.get(i).ComparebyIngredient(in);
@@ -88,7 +93,7 @@ ApiFuture<QuerySnapshot> future = db1.collection("foodRecipe").get();
 		
 		return list;
 	}
-	
+	*/
 
 
    

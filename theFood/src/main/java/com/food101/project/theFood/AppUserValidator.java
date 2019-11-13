@@ -63,11 +63,10 @@ public class AppUserValidator implements Validator {
             }
         }
  
-        if (!errors.hasFieldErrors("userName")) {//检查firebase在这里
+        if (!errors.hasFieldErrors("userName")) {//检查firebase在这里,error here
         	
         	Firestore db1 = FirestoreClient.getFirestore();
         	ApiFuture<QuerySnapshot> future = db1.collection("User").get();
-
 
         		List<QueryDocumentSnapshot> documents;
 				try {
